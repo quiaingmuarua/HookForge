@@ -44,7 +44,8 @@ af-frida run --serial emulator-5554 --spawn com.scottyab.rootbeer.sample --repla
 Run the first three commands in the HookForge checkout. `npm link` registers
 that local checkout; no registry publication or login is needed. Rebuild after
 source changes without relinking. `npm run cli -- ...` uses the same built Node
-Host. Node is pinned in `.node-version`; the repository remains private.
+Host. Node is pinned in `.node-version`. The GitHub repository is public;
+`private: true` in package.json deliberately prevents npm registry publication.
 
 To inspect the link, use `command -v af-frida`, `npm prefix -g` and
 `npm ls -g hookforge --depth=0`. If the configured Windows npm prefix is absent
