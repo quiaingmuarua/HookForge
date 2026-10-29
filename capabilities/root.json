@@ -1,0 +1,16 @@
+{
+  "id": "root",
+  "modes": ["trace", "replace"],
+  "groups": ["file-io", "system-properties", "packages", "build", "commands"],
+  "entry": "../packages/composition/shared.ts",
+  "preset": "../packages/modules/android-runtime-bypass/root-policy.json",
+  "description": "Named existing root rule preset; does not cover every root or emulator detector.",
+  "apis": [
+    "file-io",
+    "system-properties",
+    "PackageManager.getPackageInfo(String,int)",
+    "Build.TAGS",
+    "which su",
+    "mount"
+  ]
+}

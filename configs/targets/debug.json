@@ -1,0 +1,18 @@
+{
+  "description": "Debug profile with all major features and verbose logging",
+  "enable": ["http", "bypass", "trace", "info", "detection", "sim", "telephony", "network", "comprehensive"],
+  "flags": {
+    "http.captureBody": true,
+    "http.captureHeaders": true,
+    "ssl.quiet": false,
+    "ssl.comprehensive": true,
+    "info.collectMaps": true,
+    "info.collectJNI": true,
+    "info.collectExports": true,
+    "sim.logInfo": true
+  },
+  "overrides": {
+    "classes": {},
+    "symbols": {}
+  }
+}

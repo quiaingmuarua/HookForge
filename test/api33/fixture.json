@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "repository": "quiaingmuarua/HookForge",
+  "tag": "fixtures-detect-env-ee69bb3",
+  "asset": "detect-env-api33-x86_64.apk",
+  "package": "com.detect.app.sample",
+  "versionName": "1.0",
+  "versionCode": 1,
+  "abi": "x86_64",
+  "sha256": "5902e2bfebb4654388b733218d519dcacea1511ebfb6be1f8b5d013043d35fd6",
+  "source": {
+    "repository": "quiaingmuarua/AgentForge",
+    "commit": "ee69bb340d9f8392d3ba5b0ecc7fb271e324fcd4",
+    "buildCommand": "gradlew --no-daemon --max-workers=2 -Pandroid.injected.build.abi=x86_64 :crackme:detect-env:assembleDebug",
+    "jdk": "21",
+    "agp": "9.4.1",
+    "gradle": "9.8.1"
+  },
+  "duckSdk": {
+    "repository": "eltavine/Duck-Detector-Refactoring",
+    "tag": "nightly-2026-10-19-d3a085e3",
+    "commit": "d3a085e3eaedeb160eda0566e43c3535675a190b",
+    "sha256": "ceee8845e3eb1395b9ef7205666111ead2738c5a9082cfe6bed338f59145f39d"
+  }
+}

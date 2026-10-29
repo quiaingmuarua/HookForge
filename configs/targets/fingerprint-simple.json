@@ -1,0 +1,17 @@
+{
+  "description": "Lightweight device fingerprint collection profile",
+  "enable": ["fingerprint", "device"],
+  "flags": {
+    "fingerprint.outputFile": null,
+    "fingerprint.autoSave": true,
+    "host.exitOnCollectionComplete": true,
+    "info.collectJNI": false,
+    "info.collectMaps": false,
+    "info.collectExports": false,
+    "sim.logInfo": false
+  },
+  "overrides": {
+    "classes": {},
+    "symbols": {}
+  }
+}

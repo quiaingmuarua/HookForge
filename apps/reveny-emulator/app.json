@@ -1,0 +1,11 @@
+{
+  "id": "reveny-emulator",
+  "package": "com.reveny.emulator.detection.sample",
+  "process": "com.reveny.emulator.detection.sample",
+  "launch": {
+    "mode": "spawn",
+    "activity": "com.reveny.emulatordetector.ui.activity.MainActivity",
+    "nativeBeforeResume": true
+  },
+  "host": "host.mjs"
+}

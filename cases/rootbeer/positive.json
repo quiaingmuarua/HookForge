@@ -1,0 +1,10 @@
+{
+  "mode": "replace",
+  "captureStack": true,
+  "rules": {
+    "fileExists": { "/system/xbin/su": true },
+    "nativeFileRedirects": { "/system/xbin/su": "/proc/self/status" },
+    "properties": { "ro.debuggable": "1", "ro.secure": "1", "ro.build.selinux": "0" },
+    "buildTags": "test-keys"
+  }
+}

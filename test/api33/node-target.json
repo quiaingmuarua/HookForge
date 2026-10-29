@@ -1,0 +1,12 @@
+{
+  "description": "API 33 detect-env production loader integration",
+  "enable": ["bypass"],
+  "flags": {
+    "runtime.waitForJavaMs": 60000,
+    "android.api": { "mode": "observe" },
+    "http.captureBody": false,
+    "info.collectMaps": false,
+    "info.collectJNI": false
+  },
+  "overrides": { "classes": {}, "symbols": {} }
+}

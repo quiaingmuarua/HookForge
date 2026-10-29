@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": true
+  },
+  "include": [
+    "test/api33/java.ts",
+    "test/api33/native.js",
+    "cases/rootbeer/*.ts",
+    "cases/duck-system-properties/*.ts",
+    "types/**/*.d.ts",
+    "apps/**/*.ts",
+    "cases/composable/*.ts",
+    "cases/duck-build-profile/*.ts",
+    "cases/reveny-system-properties/*.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

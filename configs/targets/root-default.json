@@ -1,0 +1,5 @@
+{
+  "description": "Shared Android root policy (no App-specific hooks)",
+  "enable": ["bypass"],
+  "flags": { "runtime.waitForJavaMs": 60000 }
+}

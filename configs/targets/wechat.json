@@ -1,0 +1,17 @@
+{
+  "description": "WeChat target profile",
+  "enable": ["http", "bypass", "network", "comprehensive"],
+  "flags": {
+    "http.captureBody": true,
+    "http.captureHeaders": true,
+    "ssl.quiet": false,
+    "ssl.comprehensive": true,
+    "info.collectJNI": true,
+    "info.collectMaps": false,
+    "info.collectExports": false
+  },
+  "overrides": {
+    "classes": {},
+    "symbols": {}
+  }
+}

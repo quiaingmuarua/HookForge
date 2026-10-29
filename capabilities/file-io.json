@@ -1,0 +1,8 @@
+{
+  "id": "file-io",
+  "modes": ["trace", "replace"],
+  "groups": ["file-io"],
+  "entry": "../packages/composition/shared.ts",
+  "description": "Java existence checks and libc path access; direct syscalls are outside this scope.",
+  "apis": ["java.io.File.exists", "libc.fopen", "libc.access", "libc.stat", "libc.open"]
+}

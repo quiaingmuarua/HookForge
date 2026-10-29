@@ -1,0 +1,12 @@
+{
+  "mode": "replace",
+  "captureStack": true,
+  "rules": {
+    "fileExists": { "/system/xbin/su": false },
+    "nativeFileRedirects": { "/system/xbin/su": "/proc/self/agentforge-missing" },
+    "properties": { "ro.debuggable": "0", "ro.secure": "1", "ro.build.selinux": "0" },
+    "buildTags": "release-keys",
+    "commandRedirects": [{ "argv": ["which", "su"], "replacement": ["which", "agentforge-missing-command"] }],
+    "readOnlyMounts": ["/system", "/system/bin", "/system/sbin", "/system/xbin", "/vendor/bin", "/sbin", "/etc"]
+  }
+}

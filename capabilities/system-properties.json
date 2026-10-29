@@ -1,0 +1,15 @@
+{
+  "id": "system-properties",
+  "modes": ["trace", "replace"],
+  "groups": ["system-properties"],
+  "entry": "../packages/composition/shared.ts",
+  "description": "Property getters, getprop output and native callback values; Build constants/raw property memory are outside this scope.",
+  "apis": [
+    "SystemProperties.get(1/2)",
+    "Runtime.exec(String/String[])",
+    "ProcessBuilder.start",
+    "libc.__system_property_get",
+    "libc.__system_property_find",
+    "libc.__system_property_read_callback"
+  ]
+}

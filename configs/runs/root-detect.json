@@ -1,0 +1,8 @@
+{
+  "description": "Observe selected Android Java/libc APIs; readiness smoke only",
+  "target": "com.android.settings",
+  "config": "configs/targets/api-observe.json",
+  "spawn": true,
+  "smoke": true,
+  "timeoutMs": 12000
+}

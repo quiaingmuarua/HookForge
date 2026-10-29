@@ -1,0 +1,8 @@
+{
+  "description": "Quick recipe-style run for baseline network observation on Android Settings",
+  "target": "com.android.settings",
+  "config": "configs/targets/default.json",
+  "spawn": true,
+  "smoke": true,
+  "timeoutMs": 12000
+}

@@ -1,0 +1,18 @@
+{
+  "description": "Google Messages target profile",
+  "enable": ["http", "bypass", "sim", "telephony", "network"],
+  "flags": {
+    "http.captureBody": true,
+    "http.captureHeaders": true,
+    "ssl.quiet": false,
+    "sim.logInfo": true,
+    "network.comprehensive": true,
+    "info.collectJNI": false,
+    "info.collectMaps": false,
+    "info.collectExports": false
+  },
+  "overrides": {
+    "classes": {},
+    "symbols": {}
+  }
+}

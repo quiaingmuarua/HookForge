@@ -1,0 +1,7 @@
+{
+  "description": "Load the Java bridge and record readiness without enabling hooks or recipes",
+  "enable": [],
+  "flags": {
+    "runtime.waitForJavaMs": 60000
+  }
+}

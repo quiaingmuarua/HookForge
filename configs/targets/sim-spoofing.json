@@ -1,0 +1,12 @@
+{
+  "description": "SIM spoofing profile driven by the loaded spoof config",
+  "enable": ["sim"],
+  "flags": {
+    "sim.logInfo": true,
+    "sim.enableSpoofing": true
+  },
+  "overrides": {
+    "classes": {},
+    "symbols": {}
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "frida-java-bridge-7.0.13-art-initial-sync",
+  "packageName": "frida-java-bridge",
+  "packageVersion": "7.0.13",
+  "targetFile": "lib/android.js",
+  "sourceTarball": "https://registry.npmjs.org/frida-java-bridge/-/frida-java-bridge-7.0.13.tgz",
+  "sourceIntegrity": "sha512-YSyKjxbxKnSi3KSUy9vciOvTOuq0RRh9dkxzkQVEdfIIZlw20zE8D3Cq9eL2FDqUVj4YKas6Wf09kCjL5zbffg==",
+  "originalSha256": "ee119401893ab7353525fe181c99554cd13776c10a47e24ebf29c2d0de28a11c",
+  "patchedSha256": "9e925f2f263a953a856bc7d926b1ce0a170c47a64ffa5add480535a6a504b609",
+  "replacement": {
+    "before": ["    notifyArtMethodHooked(hookedMethodId, vm);", "  }", "", "  revert (vm) {"],
+    "after": [
+      "    notifyArtMethodHooked(hookedMethodId, vm);",
+      "",
+      "    if (artNterpEntryPoint !== null) {",
+      "      Interceptor.flush();",
+      "      artController.replacedMethods.synchronize(getArtMethodSpec(vm).offset.quickCode, api.artNterpEntryPoint, api.artQuickToInterpreterBridge);",
+      "    }",
+      "  }",
+      "",
+      "  revert (vm) {"
+    ]
+  }
+}

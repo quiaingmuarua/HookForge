@@ -1,0 +1,16 @@
+{
+  "description": "Universal spoof profile for SIM, device info, and location overrides",
+  "enable": ["sim", "build-spoof", "location-spoof"],
+  "flags": {
+    "sim.logInfo": true,
+    "sim.enableSpoofing": true,
+    "build.logInfo": true,
+    "build.enableSpoofing": true,
+    "location.logInfo": true,
+    "location.enableSpoofing": true
+  },
+  "overrides": {
+    "classes": {},
+    "symbols": {}
+  }
+}

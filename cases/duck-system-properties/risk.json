@@ -1,0 +1,12 @@
+{
+  "mode": "replace",
+  "captureStack": true,
+  "rules": {
+    "properties": {
+      "ro.debuggable": "1",
+      "ro.secure": "0",
+      "ro.adb.secure": "0",
+      "service.adb.root": "1"
+    }
+  }
+}

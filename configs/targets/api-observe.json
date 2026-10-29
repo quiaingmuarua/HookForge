@@ -1,0 +1,8 @@
+{
+  "description": "Observe Android Java/libc APIs without replacing results",
+  "enable": ["bypass"],
+  "flags": {
+    "runtime.waitForJavaMs": 60000,
+    "android.api": { "mode": "observe", "captureStack": true }
+  }
+}

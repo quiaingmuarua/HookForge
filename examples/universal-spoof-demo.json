@@ -1,0 +1,75 @@
+{
+  "device_info": {
+    "brand": "samsung",
+    "manufacturer": "Samsung",
+    "model": "SM-G998B",
+    "device": "o1s",
+    "product": "o1sxxx",
+    "hardware": "exynos2100",
+    "board": "exynos2100",
+    "fingerprint": "samsung/o1sxxx/o1s:12/SP1A.210812.016/G998BXXS5CVBA:user/release-keys",
+    "bootloader": "G998BXXS5CVBA",
+    "build_id": "SP1A.210812.016",
+    "android_version": "12",
+    "api_level": 31,
+    "security_patch": "2022-02-01",
+    "serial": "R3CR123ABCD",
+    "android_id": "1234567890abcdef"
+  },
+  "sim_info": {
+    "simOperator": "31000",
+    "simOperatorName": "T-Mobile",
+    "simCountryIso": "us",
+    "networkOperator": "31000",
+    "networkOperatorName": "T-Mobile USA",
+    "networkCountryIso": "us",
+    "simSerialNumber": "8901260123456789012",
+    "subscriberId": "310260123456789",
+    "line1Number": "+15551234567",
+    "carrierId": 1234,
+    "specificCarrierId": 5678,
+    "imei": "867533040123456",
+    "imsi": "310260123456789"
+  },
+  "location_info": {
+    "latitude": 40.7128,
+    "longitude": -74.0060,
+    "altitude": 10.0,
+    "accuracy": 5.0,
+    "provider": "gps",
+    "country": "United States",
+    "city": "New York",
+    "timezone": "America/New_York"
+  },
+  "network_info": {
+    "wifi_ssid": "TestNetwork",
+    "wifi_bssid": "00:11:22:33:44:55",
+    "wifi_mac": "AA:BB:CC:DD:EE:FF",
+    "cellular_type": "LTE",
+    "ip_address": "192.168.1.100"
+  },
+  "hardware_info": {
+    "cpu_cores": 8,
+    "cpu_freq": 2400,
+    "ram_total": 8192,
+    "storage_total": 128000,
+    "screen_width": 1440,
+    "screen_height": 3200,
+    "density_dpi": 515,
+    "battery_capacity": 4000
+  },
+  "sensor_info": {
+    "accelerometer": true,
+    "gyroscope": true,
+    "magnetometer": true,
+    "proximity": true,
+    "light": true,
+    "fingerprint": true,
+    "face_unlock": false
+  },
+  "collection_info": {
+    "timestamp": 1755843949182,
+    "collection_date": "2025-08-22T06:25:49.182Z",
+    "collection_method": "frida-spoof-framework"
+  }
+}

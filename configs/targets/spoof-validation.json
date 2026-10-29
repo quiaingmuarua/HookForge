@@ -1,0 +1,40 @@
+{
+  "description": "Automated spoof validation profile for DetectApp-style checks",
+  "enable": ["sim", "build-spoof", "spoof-validator"],
+  "flags": {
+    "sim.enableSpoofing": true,
+    "sim.logInfo": true,
+    "build.enableSpoofing": true,
+    "build.logInfo": true,
+    "validator.enabled": true,
+    "validator.detectApp": true,
+    "validator.autoTrigger": true,
+    "info.collectMaps": false,
+    "info.collectJNI": false,
+    "info.collectExports": false,
+    "http.captureBody": false,
+    "http.captureHeaders": false,
+    "ssl.quiet": true
+  },
+  "overrides": {
+    "classes": {
+      "com.detect.app.sample.fingerprint_detect.unique_fingerprint.SettingPropInfoCollect": {
+        "hookMethods": ["getAllInfo"],
+        "logCalls": true
+      }
+    },
+    "symbols": {}
+  },
+  "validation": {
+    "enabled": true,
+    "autoTriggerDelay": 3000,
+    "expectedResults": {
+      "device_brand": "samsung",
+      "device_model": "SM-G998B",
+      "android_version": "12",
+      "android_id": "1234567890abcdef",
+      "sim_operator": "31000",
+      "sim_operator_name": "T-Mobile"
+    }
+  }
+}

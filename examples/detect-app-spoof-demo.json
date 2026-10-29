@@ -1,0 +1,60 @@
+{
+  "description": "DetectApp Sample 专用伪装配置 - 用于验证指纹伪装效果",
+  "device_info": {
+    "brand": "samsung",
+    "manufacturer": "Samsung",
+    "model": "SM-G998B",
+    "device": "o1s",
+    "product": "o1sxxx",
+    "android_version": "12",
+    "api_level": 31,
+    "android_id": "1234567890abcdef",
+    "serial": "RF8M802WPGL",
+    "fingerprint": "samsung/o1sxxx/o1s:12/SP1A.210812.016/G998BXXU5CVID:user/release-keys"
+  },
+  "sim_info": {
+    "simOperator": "31000",
+    "simOperatorName": "T-Mobile",
+    "simCountryIso": "us",
+    "networkOperator": "31000",
+    "networkOperatorName": "T-Mobile", 
+    "networkCountryIso": "us",
+    "line1Number": "+15551234567",
+    "subscriberId": "310004123456789",
+    "simSerialNumber": "8901410123456789012",
+    "imei": "867533040123456",
+    "phoneType": "1"
+  },
+  "location_info": {
+    "latitude": 40.7128,
+    "longitude": -74.0060,
+    "city": "New York",
+    "country": "United States",
+    "timezone": "America/New_York"
+  },
+  "network_info": {
+    "wifi_ssid": "TestNetwork_5G",
+    "wifi_bssid": "00:11:22:33:44:55",
+    "ip_address": "192.168.1.100",
+    "mac_address": "02:00:00:00:00:00"
+  },
+  "system_props": {
+    "ro.product.brand": "samsung",
+    "ro.product.manufacturer": "Samsung",
+    "ro.product.model": "SM-G998B",
+    "ro.product.device": "o1s",
+    "ro.build.version.release": "12",
+    "ro.build.version.sdk": "31"
+  },
+  "validation_notes": {
+    "purpose": "专门用于验证 com.detect.app.sample 应用的指纹检测绕过",
+    "test_points": [
+      "SIM 信息 (运营商、IMEI、手机号)",
+      "设备信息 (品牌、型号、Android版本)",
+      "位置信息 (如果应用检测GPS)",
+      "网络信息 (WiFi、IP地址)",
+      "系统属性 (Build属性)"
+    ],
+    "verification_method": "对比应用调用 SettingPropInfoCollect.getAllInfo() 前后的输出"
+  }
+}

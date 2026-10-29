@@ -1,0 +1,13 @@
+{
+  "mode": "replace",
+  "captureStack": true,
+  "rules": {
+    "properties": {
+      "ro.build.product": "sdk",
+      "ro.product.manufacturer": "sdk",
+      "ro.bootloader": "nox",
+      "ro.product.device": "generic",
+      "ro.hardware": "goldfish"
+    }
+  }
+}

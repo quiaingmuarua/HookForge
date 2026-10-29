@@ -1,0 +1,19 @@
+{
+  "id": "build-fields",
+  "modes": ["replace"],
+  "groups": ["build-fields"],
+  "entry": "../packages/composition/shared.ts",
+  "description": "Reversible standard Build string fields. Receipts are state changes, not field-read traces; no version or ABI replacement.",
+  "apis": [
+    "Build.BRAND",
+    "Build.MANUFACTURER",
+    "Build.MODEL",
+    "Build.DEVICE",
+    "Build.PRODUCT",
+    "Build.BOARD",
+    "Build.HARDWARE",
+    "Build.FINGERPRINT",
+    "Build.TYPE",
+    "Build.TAGS"
+  ]
+}

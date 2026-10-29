@@ -1,0 +1,19 @@
+{
+  "description": "Default profile with baseline runtime hooks enabled",
+  "enable": ["http", "bypass", "sim", "telephony"],
+  "flags": {
+    "http.captureBody": false,
+    "http.captureHeaders": true,
+    "http.captureResponseHeaders": true,
+    "http.captureBodyMeta": true,
+    "ssl.quiet": false,
+    "ssl.comprehensive": true,
+    "info.collectMaps": false,
+    "info.collectJNI": true,
+    "info.collectExports": false
+  },
+  "overrides": {
+    "classes": {},
+    "symbols": {}
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "device_info": {
+    "brand": "samsung",
+    "manufacturer": "Samsung",
+    "model": "Galaxy S23",
+    "device": "dm3q",
+    "android_version": "14",
+    "api_level": 34
+  },
+  "sim_info": {
+    "simOperator": "31000",
+    "simOperatorName": "T-Mobile",
+    "simCountryIso": "us",
+    "networkOperator": "31000", 
+    "networkOperatorName": "T-Mobile USA",
+    "networkCountryIso": "us",
+    "simSerialNumber": "898640000000000001",
+    "subscriberId": "310000000000001",
+    "line1Number": "+15551234567",
+    "carrierId": 1234,
+    "specificCarrierId": 5678
+  },
+  "collection_info": {
+    "timestamp": 1755843949182,
+    "collection_date": "2025-08-22T06:25:49.182Z",
+    "collection_method": "frida-hook-spoofed"
+  }
+}

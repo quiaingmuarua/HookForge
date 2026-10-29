@@ -1,0 +1,16 @@
+{
+  "description": "Stealth profile with minimal logging",
+  "enable": ["bypass"],
+  "flags": {
+    "http.captureBody": false,
+    "http.captureHeaders": false,
+    "ssl.quiet": true,
+    "info.collectMaps": false,
+    "info.collectJNI": false,
+    "info.collectExports": false
+  },
+  "overrides": {
+    "classes": {},
+    "symbols": {}
+  }
+}

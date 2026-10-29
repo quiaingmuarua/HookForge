@@ -1,0 +1,39 @@
+{
+  "description": "DetectApp Sample target profile for fingerprint collection and spoof validation",
+  "enable": ["fingerprint", "device", "info", "sim", "build-spoof", "spoof-validator"],
+  "flags": {
+    "fingerprint.outputFile": null,
+    "fingerprint.autoSave": true,
+    "fingerprint.collectDetectApp": true,
+    "sim.enableSpoofing": true,
+    "sim.logInfo": true,
+    "build.enableSpoofing": true,
+    "build.logInfo": true,
+    "validator.enabled": true,
+    "validator.detectApp": true,
+    "validator.autoTrigger": true,
+    "info.collectMaps": false,
+    "info.collectJNI": true,
+    "info.collectExports": false,
+    "http.captureBody": false,
+    "http.captureHeaders": false,
+    "ssl.quiet": true
+  },
+  "overrides": {
+    "classes": {
+      "com.detect.app.sample.fingerprint_detect.unique_fingerprint.SettingPropInfoCollect": {
+        "hookMethods": ["getAllInfo"],
+        "logCalls": true
+      }
+    },
+    "symbols": {}
+  },
+  "customHooks": {
+    "detectAppValidation": {
+      "enabled": true,
+      "className": "com.detect.app.sample.fingerprint_detect.unique_fingerprint.SettingPropInfoCollect",
+      "method": "getAllInfo",
+      "description": "Hook DetectApp fingerprint collection to validate spoof output"
+    }
+  }
+}

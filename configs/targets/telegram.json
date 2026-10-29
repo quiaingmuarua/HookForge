@@ -1,0 +1,17 @@
+{
+  "description": "Telegram target profile",
+  "enable": ["http", "bypass", "network", "comprehensive"],
+  "flags": {
+    "http.captureBody": true,
+    "http.captureHeaders": true,
+    "ssl.quiet": false,
+    "network.comprehensive": true,
+    "info.collectJNI": false,
+    "info.collectMaps": false,
+    "info.collectExports": false
+  },
+  "overrides": {
+    "classes": {},
+    "symbols": {}
+  }
+}

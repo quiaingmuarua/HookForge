@@ -1,0 +1,8 @@
+{
+  "id": "detect-env-duck",
+  "package": "com.detect.app.sample",
+  "process": "com.detect.app.sample",
+  "launch": { "mode": "activity", "activity": "android.app.NativeActivity" },
+  "host": "host.mjs",
+  "agent": "agent.ts"
+}

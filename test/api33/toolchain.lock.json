@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 2,
+  "fridaVersion": "17.9.1",
+  "targets": {
+    "x86_64": {
+      "serverArch": "x86_64",
+      "processArch": "x64",
+      "serverSha256": "fd677533f1215654308e06db3c34905ed6a456a39343696b2f38ead09415884d",
+      "serverArchiveSha256": "f5f1205ffb3cb145de9264a8c6aa7aa8724a2e33df319d476f2ef67cac453c5f"
+    },
+    "arm64-v8a": {
+      "serverArch": "arm64",
+      "processArch": "arm64",
+      "serverSha256": "7dc6b75d0fa8cd0b90ffb8594dc7546930edee57a8839b92749ec58d609f7c4d",
+      "serverArchiveSha256": "9200b4f31a6cf2aa8e847201e70ffa2c9621f5990d7a3fd96d5ed627c6f2d396"
+    }
+  }
+}

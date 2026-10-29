@@ -1,0 +1,13 @@
+{
+  "mode": "replace",
+  "captureStack": true,
+  "rules": {
+    "properties": {
+      "ro.build.product": "af_lab_x64",
+      "ro.product.manufacturer": "AgentForge",
+      "ro.bootloader": "af_lab_boot",
+      "ro.product.device": "af_lab_x64",
+      "ro.hardware": "af_lab_hw"
+    }
+  }
+}

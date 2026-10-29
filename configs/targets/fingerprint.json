@@ -1,0 +1,20 @@
+{
+  "description": "Full device fingerprint collection profile for device analysis",
+  "enable": ["fingerprint", "device", "info", "sim"],
+  "flags": {
+    "fingerprint.outputFile": null,
+    "fingerprint.autoSave": true,
+    "host.exitOnCollectionComplete": true,
+    "info.collectMaps": false,
+    "info.collectJNI": false,
+    "info.collectExports": false,
+    "sim.logInfo": true,
+    "http.captureBody": false,
+    "http.captureHeaders": false,
+    "ssl.quiet": true
+  },
+  "overrides": {
+    "classes": {},
+    "symbols": {}
+  }
+}
