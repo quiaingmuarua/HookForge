@@ -121,7 +121,15 @@ test('spawn and attach use one owned session; resume precedes capability readine
     try {
       await f.instance.prepare();
       await f.instance.inject();
+      await f.instance.drain();
       await f.instance.close();
+      const recorded = fs
+        .readFileSync(path.join(f.output, 'events.jsonl'), 'utf8')
+        .trim()
+        .split('\n')
+        .map(line => JSON.parse(line));
+      assert.equal(recorded.find(item => item.type === 'ready')?.target.pid, 42);
+      assert.deepEqual(recorded.find(item => item.type === 'api-observations')?.records, []);
       assert.equal(f.calls.filter(call => call === 'create').length, 1);
       assert.ok(f.calls.indexOf('dispose') < f.calls.indexOf('unload'));
       assert.ok(f.calls.includes('forward --remove tcp:40001'));

@@ -24,7 +24,8 @@ node cases/composable/rootbeer.mjs \
 ```
 
 Use a fresh output directory each time. Production validation precedes device
-work; omitting the pair builds locally. Drivers install with `-r`, verify bytes
+work; omitting the pair reads the existing local `dist/android-api.js` (build it
+first). Drivers install with `-r`, verify bytes
 and never clear App data. RootBeer retains the pinned fixture identity. Duck
 records the supplied build's actual APK hash and the original SDK identity.
 
@@ -50,3 +51,55 @@ RootBeer rooted → not rooted → rooted; Duck's selected properties change all
 three real SDK sources and reduce Critical from risk to normal while its other
 findings can remain DANGER. Counts are observations, never a fixed score or a
 whole-device safety claim. Evidence stays in `.runtime`; this adds no CI lane.
+
+## Linked CLI real APK proof
+
+After `npm ci`, `npm run build:prod` and `npm link` in HookForge, run this from
+your separate project directory. Use native Windows Git Bash, not WSL:
+
+```bash
+node /d/code_project/geekrun/HookForge/cases/composable/linked.mjs \
+  --serial emulator-5554 \
+  --rootbeer-apk /d/code_project/geekrun/HookForge/.runtime/fixtures/rootbeer-sample-0.9.apk \
+  --duck-apk /d/code_project/geekrun/HookForge/.runtime/fixtures/detect-env-api33-x86_64.apk
+```
+
+The API33 x86_64 emulator and locked Frida 17.9.1 server must already be ready.
+The driver replaces neither the server nor App data. It installs both supplied
+APKs with `-r -t`, checks installed bytes, uses fixed RootBeer identity and checks
+Duck SDK/host identity in every original report. Optional `--output` must be new;
+default evidence is the caller's `.runtime/frida/cases/local-link/<run-id>`.
+
+This driver executes the real linked command, not `openComposition`, Frida or
+direct RPC. Each CLI run has a 22-second duration after readiness. RootBeer
+runs observe and root replacement through original UI taps, then rechecks the
+same process after each stop and a cold process. A managed read-only adapter
+reports original results without changing them. Its observe run also exercises
+the caller's default tool output directory.
+
+Duck runs observe, risk and normal as independent CLI runs and triggers one
+original `system_properties` HTTP scan per run. Each stop is followed by two
+same-PID scans; a final no-Script cold scan checks restoration. A caller-owned
+App declaration starts the original NativeActivity and waits for the real main
+UI/HTTP. Caller-owned profiles, a selected extension and a separate managed
+script load; a declared unselected extension must not load. The original four
+properties, three SDK API sources, Critical reduction, unrelated content and
+recovery remain required. No whole-device safety claim is made.
+
+`result.json` / `report.md` summarize App acceptance. Each run's own `result.json`
+separately reports CLI readiness, installed APIs, actual hashes and cleanup;
+`events.jsonl` retains periodic and final API batches. Original UI XML/screenshots,
+HTTP responses and JSON/Full Reports remain in the evidence directory. The same
+public bundle is used without rebuilding or changing its modification time.
+
+Local verification on 2026-10-29 (API33 x86_64, Frida 17.9.1) passed through
+the linked executable from AgentForge:
+
+| Original result | Baseline / observe | Replacement | After unload / cold |
+| --- | --- | --- | --- |
+| RootBeer UI | Rooted: TestKeys and Dangerous Props | Not rooted; all twelve checks false | Rooted again |
+| Duck system_properties Critical | 7 / 7 | Risk 8; normal 4 | 7 on every recheck |
+
+Duck remained DANGER; these counts describe this run only. All four configured
+properties had actual Java, getprop and native SDK evidence. RootBeer's default
+native result was negative and is not counted as a native bypass.

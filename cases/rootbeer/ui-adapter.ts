@@ -50,7 +50,9 @@ function onMain<T>(fn: () => T): Promise<T> {
   );
 }
 
-export function installUiAdapter() {
+export function installUiAdapter(
+  onResult?: (result: { pid: number; rooted: boolean; checks: typeof uiResults }) => void
+) {
   const previous = { ...rpc.exports };
   rpc.exports = {
     ...rpc.exports,
@@ -82,6 +84,11 @@ export function installUiAdapter() {
         finish.implementation = function (this: any, rooted: boolean) {
           const result = finish.call(this, rooted);
           uiFinished = Boolean(rooted);
+          try {
+            onResult?.({ pid: Process.id, rooted: uiFinished, checks: uiResults });
+          } catch (error) {
+            observerFailure = String(error);
+          }
           return result;
         };
         observers.push(animate, finish);
