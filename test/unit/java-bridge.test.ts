@@ -76,7 +76,11 @@ test('performOnJava rejects when the VM cannot schedule work', async () => {
 
 test('app loader initialization uses boot classes before queuing Java work', async () => {
   const loader = {};
-  const classFactory = { loader: null as unknown };
+  const classFactory = {
+    loader: null as unknown,
+    cacheDir: '/data/local/tmp',
+    codeCacheDir: '/data/local/tmp/dalvik-cache',
+  };
   let queries = 0;
   const facade = facadeFor(
     () => {
@@ -88,13 +92,48 @@ test('app loader initialization uses boot classes before queuing Java work', asy
       use: (name: string) => {
         assert.equal(name, 'android.app.ActivityThread');
         return {
-          currentApplication: () => (++queries === 1 ? null : { getClassLoader: () => loader }),
+          currentApplication: () =>
+            ++queries === 1
+              ? null
+              : {
+                  getClassLoader: () => loader,
+                  getCacheDir: () => ({ getCanonicalPath: () => '/data/user/0/example/cache' }),
+                  getCodeCacheDir: () => ({
+                    getCanonicalPath: () => '/data/user/0/example/code_cache',
+                  }),
+                },
         };
       },
     }
   );
   assert.equal(await facade.initializeJavaClassLoader(250), true);
   assert.equal(classFactory.loader, loader);
+  assert.equal(classFactory.cacheDir, '/data/user/0/example/cache');
+  assert.equal(classFactory.codeCacheDir, '/data/user/0/example/code_cache');
+});
+
+test('a failed app cache lookup cannot publish a partially initialized loader', async () => {
+  const factory = { loader: null, cacheDir: '/data/local/tmp', codeCacheDir: '/data/local/tmp' };
+  const failure = new Error('Application cache unavailable');
+  const facade = facadeFor(callback => callback(), {
+    classFactory: factory,
+    performNow: (callback: () => void) => callback(),
+    use: () => ({
+      currentApplication: () => ({
+        getClassLoader: () => ({}),
+        getCacheDir: () => ({ getCanonicalPath: () => '/data/user/0/example/cache' }),
+        getCodeCacheDir: () => {
+          throw failure;
+        },
+      }),
+    }),
+  });
+  await assert.rejects(facade.initializeJavaClassLoader(100), error => error === failure);
+  assert.deepEqual(factory, {
+    loader: null,
+    cacheDir: '/data/local/tmp',
+    codeCacheDir: '/data/local/tmp',
+  });
 });
 
 test('app loader initialization has a bounded failure when Application is absent', async () => {
