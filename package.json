@@ -73,7 +73,7 @@
     "artifact:write": "cross-env NODE_ENV=production node scripts/production-artifact.mjs write",
     "artifact:verify": "node scripts/production-artifact.mjs verify",
     "check:bridge-patch": "node scripts/patch-java-bridge.mjs --check",
-    "cli": "node hosts/node-cli/run.js",
+    "cli": "node dist/node-cli/run.js",
     "case:composable": "node cases/composable/run.mjs",
     "case:duck-build-profile": "node cases/duck-build-profile/run.mjs",
     "case:reveny-system-properties": "node cases/reveny-system-properties/run.mjs"
@@ -108,6 +108,6 @@
     "node": ">=22 <25"
   },
   "bin": {
-    "af-frida": "hosts/node-cli/run.js"
+    "af-frida": "dist/node-cli/run.js"
   }
 }
