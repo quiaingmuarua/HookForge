@@ -28,8 +28,22 @@ export async function initializeJavaClassLoader(
       Java.performNow(() => {
         const app = Java.use('android.app.ActivityThread').currentApplication();
         if (app !== null) {
-          // The bridge exposes a setter; its bundled typings mark it readonly.
-          (Java.classFactory as { loader: unknown }).loader = app.getClassLoader();
+          // Like the bridge's Application initialization, establish writable
+          // app-private DEX paths before publishing the loader. Setting only
+          // loader bypasses its initialization and leaves /data/local/tmp,
+          // which a freshly installed non-root App cannot write.
+          const cacheDir = String(app.getCacheDir().getCanonicalPath());
+          const codeCacheDir = String(app.getCodeCacheDir().getCanonicalPath());
+          const loader = app.getClassLoader();
+          // codeCacheDir exists in the pinned bridge, but is absent from its types.
+          const factory = Java.classFactory as unknown as {
+            loader: unknown;
+            cacheDir: string;
+            codeCacheDir: string;
+          };
+          factory.cacheDir = cacheDir;
+          factory.codeCacheDir = codeCacheDir;
+          factory.loader = loader;
           ready = true;
         }
       });

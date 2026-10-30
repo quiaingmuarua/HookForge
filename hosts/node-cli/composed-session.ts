@@ -319,7 +319,14 @@ export function createSession(
     }
     result.ready = true;
     result.instrumentation = 'composition';
-    log('capabilities ready', result.installation);
+    const ready = {
+      type: 'ready',
+      target: result.target,
+      installation: result.installation,
+      httpBase: ctx.httpBase,
+    };
+    event(ready);
+    log('capabilities ready', ready);
     return script.exports;
   }
   async function clean(action: string, operation: () => unknown) {
@@ -409,6 +416,23 @@ export function createSession(
     inject,
     unload,
     close,
+    async drain() {
+      const batch = await boundedOperation(
+        () => script!.exports.drain(),
+        'API observations',
+        10000,
+        cancellation.signal
+      );
+      event({ type: 'api-observations', ...batch });
+      if (
+        result.errors.length ||
+        batch.dropped ||
+        batch.records.some((item: any) => item.runtimeError)
+      ) {
+        throw new Error('API observation integrity failed');
+      }
+      return batch;
+    },
     verifyPid,
     async launchOriginal() {
       if (script || session || device || !plan.app?.launch.activity) {

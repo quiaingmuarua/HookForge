@@ -10,6 +10,15 @@ scripts. Do runtime work inside activation, not at import time.
 [Detection Intervention Contract](../CLAUDE.md#detection-intervention-contract)
 applies to shared API acceptance; label target-specific solutions separately.
 
+Build with `npm run build:prod`, then `npm link` in HookForge. From another
+project, `af-frida list/plan/run` uses that checkout's built Host and public
+agent. Your manifests, profiles and scripts can stay outside HookForge; pass
+their paths as arguments. Relative CLI paths and default `.runtime/frida/runs`
+output belong to the caller (`INIT_CWD` when invoked through npm). Manifest
+entries are relative to the manifest. Only selected managed entries compile;
+run does not rebuild the public bundle or write outputs into the tool install.
+The paired production artifact options retain their existing verifier.
+
 ## Add a public capability
 
 Create a local manifest, without editing the CLI or legacy module registry:

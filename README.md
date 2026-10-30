@@ -28,18 +28,33 @@ API coverage. See [agent rules](CLAUDE.md).
 
 ## Compose existing capabilities
 
-Prepare the workspace when dependencies or generated hosts are needed:
+Build and link the local tool once (Windows Git Bash, native Windows Node/ADB):
 
-```powershell
+```bash
 npm ci
-npm run build:hosts
-npm run cli -- list
-npm run cli -- plan --replace root,system-properties --trace file-io,system-properties
-npm run cli -- run --serial emulator-5554 --spawn com.scottyab.rootbeer.sample --replace root,system-properties --trace file-io,system-properties
+npm run build:prod
+npm link
+
+# Run from your sample/project directory, outside HookForge:
+af-frida list
+af-frida plan --replace root,system-properties --trace file-io,system-properties
+af-frida run --serial emulator-5554 --spawn com.scottyab.rootbeer.sample --replace root --trace file-io,system-properties
 ```
 
-Commands above run from the HookForge root. The package bin `af-frida` exposes
-the same entry; a global install is optional. Node is pinned in `.node-version`.
+Run the first three commands in the HookForge checkout. `npm link` registers
+that local checkout; no registry publication or login is needed. Rebuild after
+source changes without relinking. `npm run cli -- ...` uses the same built Node
+Host. Node is pinned in `.node-version`. The GitHub repository is public;
+`private: true` in package.json deliberately prevents npm registry publication.
+
+To inspect the link, use `command -v af-frida`, `npm prefix -g` and
+`npm ls -g hookforge --depth=0`. If the configured Windows npm prefix is absent
+from Git Bash's PATH, add it for the current shell with
+`export PATH="$(cygpath -u "$(npm prefix -g)"):$PATH"`. No system PATH change is
+made by HookForge. Remove the global link with `npm unlink -g hookforge`.
+If a Node consumer also needs a project-local link, run
+`npm link hookforge --no-save` there, and remove it with
+`npm unlink hookforge --no-save`; this slice provides a CLI, not a Node SDK.
 
 - `list` reports exact API scope. `plan` is offline and executes no App startup
   or extension code. `run` enables only selected capabilities.
@@ -57,14 +72,18 @@ the same entry; a global install is optional. Node is pinned in `.node-version`.
   belong to the direct Frida CLI path above.
 - CLI paths resolve from the caller's directory (`INIT_CWD` for npm); manifest
   entries resolve from their manifest directory.
-- `--output` must be new; default output is `.runtime/frida/runs/<run-id>`.
+- `--output` must be new; default output is the calling project's
+  `.runtime/frida/runs/<run-id>`, not the HookForge installation.
   Runs stay in the foreground; Ctrl+C cleans up. `--duration-ms` starts after
   readiness. Startup defaults to 60 seconds (`--timeout-ms`).
 - The host borrows the current device/server and does not create an emulator,
   clear App data or replace a running server.
 - Paired `--agent <js> --production-manifest <json>` uses verified public
-  production bytes with managed extensions. Without the pair, run builds the
-  public bundle locally. Plans, scripts/hashes, events and cleanup are saved.
+  production bytes with managed extensions. Without the pair, run reads the
+  existing `dist/android-api.js` from HookForge and never rebuilds it. A missing
+  bundle fails before device work with the build command. Selected managed
+  extensions are still compiled for each run. Plans, actual script bytes/hashes,
+  API batches in `events.jsonl`, and cleanup are saved in the calling project.
 - Exit 0 means clean stop, 1 execution/observation/cleanup failure, 2 invalid
   input. A clean stop or no hook hits does not establish detector success.
   `original` describes this API layer; use a separate no-intervention baseline.
@@ -80,6 +99,7 @@ implicit replacement.
 | [RootBeer](cases/rootbeer/README.md) | Shared API effects through original UI; optional same-bundle detect-env reuse |
 | [Duck properties](cases/duck-system-properties/README.md) | Original SDK callers through Java, getprop and native property callbacks |
 | [Composable CLI](cases/composable/README.md) | Existing cases through CLI selection and managed App extensions |
+| [Linked CLI](cases/composable/README.md#linked-cli-real-apk-proof) | Actual npm-linked executable from an external project, RootBeer UI and Duck HTTP changes and recovery |
 | [Duck Build/profile](cases/duck-build-profile/README.md) | Combined Build/property effects, inconsistent control and recovery |
 | [Reveny properties](cases/reveny-system-properties/README.md) | Original first scan with early native property hooks and cache-aware recovery |
 

@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
-import { spawnSync } from 'node:child_process';
 import { build, type Plugin } from 'esbuild';
 import { InputError, type Plan } from './composition';
 
@@ -25,15 +24,17 @@ export async function buildComposition(plan: Plan, workspace: string) {
     source = verified.source;
     manifest = verified.manifest;
   } else {
-    const result = spawnSync(
-      process.execPath,
-      [path.join(workspace, 'scripts/build-api-agent.mjs')],
-      { cwd: workspace, encoding: 'utf8', windowsHide: true, timeout: 120000 }
-    );
-    if (result.error || result.status !== 0) {
-      throw new Error('Public agent build failed: ' + (result.error?.message ?? result.stderr));
+    const agent = path.join(workspace, 'dist/android-api.js');
+    try {
+      source = fs.readFileSync(agent, 'utf8');
+    } catch (error) {
+      throw new InputError(
+        'Cannot read built public agent ' +
+          agent +
+          '. Run npm run build:prod in HookForge. ' +
+          error
+      );
     }
-    source = fs.readFileSync(path.join(workspace, 'dist/android-api.js'), 'utf8');
   }
   return compileComposition(plan, workspace, source, manifest);
 }

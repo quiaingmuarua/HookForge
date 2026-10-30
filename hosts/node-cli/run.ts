@@ -496,7 +496,7 @@ export function main(argv = process.argv.slice(2)) {
   return argv[0] === 'run' ? compositionCli(argv, projectRoot) : runCli(argv);
 }
 
-if (process.argv[1] && pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url) {
+if (process.argv[1] && pathToFileURL(fs.realpathSync(process.argv[1])).href === import.meta.url) {
   main()
     .then(code => process.exit(code))
     .catch(error => {

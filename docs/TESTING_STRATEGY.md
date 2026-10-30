@@ -59,7 +59,20 @@ production bundle for Duck Build/profile and RootBeer + detect-env regressions.
 
 ### Composable CLI local acceptance
 
-`npm run case:composable -- --apk <detect-env.apk> --serial
+The [linked CLI proof](../cases/composable/README.md#linked-cli-real-apk-proof)
+starts the actual npm-linked `af-frida run` from an external project. It does
+not import a session or invoke RPC. RootBeer uses original UI input and a
+read-only result adapter; Duck uses the original HTTP scan event with external
+App/profile/extension/script inputs. Observe, risk and normal use independent
+CLI runs. Each stop retains cleanup evidence and the same-PID original result
+is rechecked (twice for Duck), followed by a no-Script cold launch. This is a
+local CLI acceptance, not a replacement for the existing full shared CI proof.
+The default public bundle's hash and mtime must stay unchanged across runs.
+Unit tests also exercise an isolated npm prefix, symlink entry dispatch,
+caller paths with spaces and offline preflight failures. The test builds
+production Hosts as ignored artifacts; it never changes the user's global link.
+
+The retained in-process driver `npm run case:composable -- --apk <detect-env.apk> --serial
 <serial> [--agent <js> --production-manifest <json>] [--output <new-directory>]`
 runs the existing Duck eight-phase verdict through the new CLI parser, App
 pack, target preparation and session implementation. It saves
@@ -92,8 +105,9 @@ intervention. Source review checks that delivered intervention respects the
 canonical contract; a report classification is not an attestation of that fact.
 
 Pinned, open-source detection APKs with fixed identity and hash can be stable
-behavior gates. RootBeer is such a fixture; detect-env is built from the current
-checkout and its installed hash is recorded per run. Updating either requires
+behavior gates. RootBeer is such a fixture. HookForge standalone CI uses its
+fixed detect-env Release asset; AgentForge integration builds detect-env from
+the consumer checkout. Both record the actual installed hash. Updating either requires
 reviewing the relevant original detection paths and expected behavior.
 
 Apps with changing releases, live services or account prerequisites remain

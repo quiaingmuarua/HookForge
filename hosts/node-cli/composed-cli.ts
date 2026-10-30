@@ -5,7 +5,8 @@ import { buildComposition } from './composed-build';
 import { createSession } from './composed-session';
 
 export async function openComposition(argv: string[], workspace: string) {
-  const options = parseComposition(argv);
+  const workingDirectory = process.env.INIT_CWD || process.cwd();
+  const options = parseComposition(argv, workingDirectory);
   const plan = resolvePlan(options, workspace);
   const built = await buildComposition(plan, workspace);
   let output = options.output;
@@ -17,7 +18,7 @@ export async function openComposition(argv: string[], workspace: string) {
       throw new InputError('Output must be a new directory: ' + error);
     }
   } else {
-    const root = path.join(workspace, '.runtime/frida/runs');
+    const root = path.join(workingDirectory, '.runtime/frida/runs');
     fs.mkdirSync(root, { recursive: true });
     output = fs.mkdtempSync(path.join(root, new Date().toISOString().replace(/[:.]/g, '-') + '-'));
   }
@@ -32,6 +33,13 @@ export async function openComposition(argv: string[], workspace: string) {
   fs.writeFileSync(path.join(output, 'injected.js'), built.full);
   fs.writeFileSync(path.join(output, 'events.jsonl'), '');
   const session = createSession(plan, output, built.full);
+  session.log('run plan', {
+    workingDirectory,
+    output,
+    capabilities: plan.extensions.map(item => ({ id: item.id, modes: item.selected })),
+    groups: plan.groups,
+    traceGroups: plan.traceGroups,
+  });
   const result: any = {
     schemaVersion: 1,
     startedAt: new Date().toISOString(),
@@ -45,6 +53,7 @@ export async function openComposition(argv: string[], workspace: string) {
     traceGroups: plan.traceGroups,
     ruleSources: plan.ruleSources,
     serial: options.serial,
+    workingDirectory,
   };
   async function finish() {
     Object.assign(result, await session.close(), { finishedAt: new Date().toISOString() });
@@ -66,6 +75,7 @@ export async function compositionCli(argv: string[], workspace: string): Promise
   }
   let run: Awaited<ReturnType<typeof openComposition>> | undefined;
   let drainTimer: NodeJS.Timeout | undefined;
+  let draining: Promise<void> | undefined;
   let stop: (() => void) | undefined;
   let interrupted = false;
   const onSignal = () => {
@@ -93,27 +103,19 @@ export async function compositionCli(argv: string[], workspace: string): Promise
     if (!interrupted) {
       await new Promise<void>(resolve => {
         stop = resolve;
-        let draining = false;
-        drainTimer = setInterval(async () => {
+        drainTimer = setInterval(() => {
           if (draining) {
             return;
           }
-          draining = true;
-          try {
-            const batch = await run!.session.exports.drain();
-            if (
-              run!.session.result.errors.length ||
-              batch.dropped ||
-              batch.records.some((item: any) => item.runtimeError)
-            ) {
-              throw new Error('API observation integrity failed');
-            }
-          } catch (error) {
-            run!.session.result.errors.push(String(error));
-            resolve();
-          } finally {
-            draining = false;
-          }
+          draining = run!.session
+            .drain()
+            .catch(error => {
+              run!.session.result.errors.push(String(error));
+              resolve();
+            })
+            .finally(() => {
+              draining = undefined;
+            });
         }, 500);
         if (options.durationMs) {
           setTimeout(resolve, options.durationMs).unref();
@@ -129,6 +131,7 @@ export async function compositionCli(argv: string[], workspace: string): Promise
     run.session.log('run failed', String(error));
   } finally {
     clearInterval(drainTimer);
+    await draining;
     process.removeListener('SIGINT', onSignal);
     process.removeListener('SIGTERM', onSignal);
   }
