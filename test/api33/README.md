@@ -13,7 +13,7 @@ server 或 APK；工具在注入前检查选择的 ABI，证据记录实际设�
 这四项属于**运行机制回归**。这里直接替换测试 App Java/JNI 方法，只用于验证
 拦截、RPC 和恢复，不能计入公共 API 对原检测的影响证明。
 统一验收含义见 [测试策略](../../docs/TESTING_STRATEGY.md#two-proof-scopes)，
-干预边界见 [Detection Intervention Contract](../../CLAUDE.md#detection-intervention-contract)。
+干预边界见 [Detection Intervention Contract](../../AGENTS.md#detection-intervention-contract)。
 
 | Host | 模式 | 验证内容 |
 | --- | --- | --- |
@@ -64,12 +64,20 @@ python -X utf8 test/api33/report.py --output $fridaResults
 首次连接 RootBeer 等样本可用 `configs/targets/baseline.json` 关闭业务 Hook，
 避免默认 profile 改变正在观察的检测行为。
 
-独立仓库下载固定测试 APK；不需要 JDK、Gradle 或 AgentForge 源码：
+### 固定测试 APK
+
+独立仓库下载固定测试 APK；不需要 JDK、Gradle 或 AgentForge 源码。
+固定身份、下载坐标和哈希以 [fixture.json](fixture.json) 为准：
 
 ```bash
 mkdir -p .runtime/fixtures
 gh release download fixtures-detect-env-ee69bb3 --repo quiaingmuarua/HookForge   --pattern detect-env-api33-x86_64.apk --output .runtime/fixtures/detect-env-api33-x86_64.apk
 node scripts/fixture.mjs .runtime/fixtures/detect-env-api33-x86_64.apk
+```
+
+以下步骤用于完整 suite 的构建和准备；单独运行案例时采用该案例说明中的命令：
+
+```bash
 npm ci
 npm run build:hosts
 npm run test:ci

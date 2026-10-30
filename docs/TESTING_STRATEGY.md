@@ -1,7 +1,7 @@
 # Testing Strategy
 
 This is the canonical Frida verification guide. Shared API acceptance follows
-the [Detection Intervention Contract](../CLAUDE.md#detection-intervention-contract).
+the [Detection Intervention Contract](../AGENTS.md#detection-intervention-contract).
 CI separates runtime mechanisms from shared API behavior; passing one does not
 establish the other.
 
@@ -11,6 +11,7 @@ Select verification by the change and the current experiment:
 
 | Change | Useful local check |
 | --- | --- |
+| Existing tool used directly | Run the requested target operation; retain the tool/version, command, actual result and limits |
 | Logging, config or documentation | Run the affected command or inspect the changed content |
 | Target-specific Hook or recipe | Run the target and inspect the intended behavior and relevant output |
 | Shared Android API hook | Observe real APK calls, configure positive/negative API values, verify its own result and restoration; reuse unchanged implementation on another APK |
@@ -23,9 +24,12 @@ into CI as they become valuable. A new experiment does not need a scenario
 protocol or a general-purpose verifier before it can be useful.
 
 The user's requested App outcome is the sample task's acceptance goal. The
-agent owns analysis, hook implementation, runs and troubleshooting; the user
-performs final acceptance. Standalone scripts, target-specific hooks and useful
-text logs are valid deliverables. Report their intervention layer and limits;
+agent owns tool selection, analysis, any necessary implementation, runs and
+troubleshooting; the user performs final acceptance. An existing tool that
+achieves the outcome is a complete solution even with no new HookForge code.
+Do not add an adapter or duplicate script solely to make the tool part of this
+repository. Standalone scripts, target-specific hooks and useful text logs are
+also valid deliverables. Report their intervention layer and limits;
 they do not automatically establish shared API behavior. Existing public
 capability cases and CI keep their stronger reuse and restoration requirements.
 
@@ -191,8 +195,8 @@ Use `--result FILE` for machine-readable outcomes/messages/cleanup. See
 
 ## Layer 1: CI-safe unit tests
 
-CI runs these on related pull requests. During local work, select the relevant
-tests and broaden the run when shared behavior changes:
+CI runs these on related main commits and pull requests. During local work,
+select the relevant tests and broaden the run when shared behavior changes:
 
 - selector and matching logic
 - target config shape checks

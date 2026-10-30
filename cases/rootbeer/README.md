@@ -1,7 +1,7 @@
 # 用 RootBeer 验证通用 API hook
 
 本案例验证公共 API hook 对原检测结果的影响，遵循
-[Detection Intervention Contract](../../CLAUDE.md#detection-intervention-contract)。
+[Detection Intervention Contract](../../AGENTS.md#detection-intervention-contract)。
 案例适配器只定位控件、观察和读取结果；干预由公共模块负责。
 
 ## 运行
@@ -18,9 +18,9 @@ server 必须匹配 schema-2 toolchain lock 中选定架构的哈希，固定 Ro
 也必须包含该 ABI 的 native 库。两个架构各自保留本次 API 调用、结果和恢复证据；
 下面的历史 x86_64 对照表不代表 ARM64 已通过。
 
-`--reuse-detect-env` 要求已安装本项目的
+`--reuse-detect-env` 要求已安装 detect-env 测试 APK，包名为
 `com.detect.app.sample`，用于证明同一脚本可以跨 APK 复用；省略该参数只执行 RootBeer 验收。工具和 server 准备方法见
-[Frida README](../../README.md#general-runtime-smoke)。
+[API33 环境准备](../../test/api33/README.md#环境准备)。
 
 runner 自动构建公共 API
 bundle 一次，两个 APK 使用完全相同的公共字节和正负配置。每个目标把各自只读 UI 适配器附在公共 bundle 后，共用一个 Script 和 Java

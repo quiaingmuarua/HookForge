@@ -4,27 +4,35 @@ This case exercises the original locked Duck SDK inside detect-env through its
 existing local HTTP event. It proves four configured property inputs across
 Java reflection, a real getprop process and native libc callbacks, then checks
 the original SDK report and recovery. The intervention boundary is the
-[Detection Intervention Contract](../../CLAUDE.md#detection-intervention-contract).
+[Detection Intervention Contract](../../AGENTS.md#detection-intervention-contract).
 
 ## Inputs and command
 
 Use API33 x86_64 with the running, hash-verified `agentforge-frida-server` from
 the current [API33 toolchain](../../test/api33/README.md#环境准备). Node is pinned
-by `frida/.node-version`. The runner requires the locked client/server and does
+by `.node-version`. The runner requires the locked client/server and does
 not start an emulator, replace a running server or clear app data.
 
-From the repository root:
+Prepare the matching client/server as described in
+[environment preparation](../../test/api33/README.md#环境准备). This runner
+currently installs with `adb install -r` and requires a non-`testOnly`
+detect-env APK. Build it in the external consuming project (such as AgentForge)
+using that project's preparation instructions and normal Debug assembly,
+without `android.injected.build.abi`; pass the resulting APK through `--apk`.
 
-```powershell
-python -m agentforge_tools release resolve --component worker-sdk
-python -m agentforge_tools duck-sdk resolve
-.\gradlew.bat :crackme:detect-env:assembleDebug
+The [fixed test APK](../../test/api33/README.md#固定测试-apk) is marked
+`testOnly`. It is supported by the API33 suite, whose installer uses
+`adb install -r -t`, but cannot be passed directly to this Duck runner.
+
+From the HookForge root, with the external APK path substituted:
+
+```bash
 npm run build:prod
 npm run artifact:write
-npm run case:duck-system-properties -- `
-  --apk ".runtime/fixtures/detect-env-api33-x86_64.apk" `
-  --serial emulator-5554 `
-  --agent "dist/android-api.js" `
+npm run case:duck-system-properties -- \
+  --apk "/path/to/detect-env-debug.apk" \
+  --serial emulator-5554 \
+  --agent "dist/android-api.js" \
   --production-manifest ".runtime/frida-api33/production-manifest.json"
 ```
 
@@ -38,8 +46,9 @@ direct `node run.mjs` uses the current directory.
 even an empty existing directory is refused. APK identity is checked after
 `adb install -r`; a signature conflict fails without uninstalling or clearing
 data. The installed hash and actual scan SDK identity must match the inputs.
-SDK coordinates and AAR SHA256 come exclusively from detect-env's existing
-`test/api33/fixture.json`; an external APK keeps its own recorded hash.
+Expected SDK coordinates and AAR SHA256 come from
+[`test/api33/fixture.json`](../../test/api33/fixture.json). An external APK must
+provide the same SDK and scan interface; it keeps its own recorded APK hash.
 
 ## Experiment
 

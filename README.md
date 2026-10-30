@@ -1,30 +1,41 @@
 # HookForge
 
-Use HookForge to investigate real APKs, write hooks and deliver an actual
-result for user acceptance. Reuse its existing capabilities when helpful;
-a standalone target script is also a valid starting point.
+Solve real Android dynamic-analysis tasks with suitable existing tools,
+scripts and HookForge capabilities. HookForge should reduce repeated
+investigation and debugging; new modules or scripts alone do not prove that
+value. Keep common mechanisms and useful experience after actual use shows
+what they save.
 
 ## Start with a target
 
-Keep project-specific scripts and a short README in your own project.
-This repository keeps reusable integration examples under `apps/<sample>/`.
-Record the sample version/hash, device, command, observed effect and remaining
-limits. Decompiled source and run output belong under the repository `.runtime/`.
+Start with the target outcome and check whether an existing tool or script
+already meets it. Reproducible commands, actual results and limits are a
+successful delivery even with no new HookForge code. Use a targeted hook or
+minimal adaptation when the existing approach has a concrete gap; a third-party
+tool does not need a HookForge adapter just to be usable.
 
-For a standalone JavaScript script, use the installed Frida CLI directly:
+Keep private/project-specific scripts and a short README in your own project.
+This repository keeps reusable integration examples under `apps/<sample>/`.
+Record the sample version/hash, tool versions, device, command, observed effect
+and remaining limits. Decompiled source and run output belong under the working
+project's `.runtime/`.
+
+For a standalone JavaScript script in that project, use the installed Frida CLI
+directly:
 
 ```bash
-frida -D <device-id> -f <package> -l apps/<sample>/hook.js
+frida -D <device-id> -f <package> -l <path-to-hook.js>
 ```
 
 No App manifest or module registration is needed for that path. Choose the
 Java bridge appropriate to the host; bundled workspace code uses the shared
 bridge described in [Frida 17 notes](docs/FRIDA_17_MIGRATION.md).
 
-The agent owns analysis, implementation, runs and troubleshooting; the user
-accepts the actual result. Shared capabilities are extracted from repeated
-sample use. Target-specific interventions must not be presented as general
-API coverage. See [agent rules](CLAUDE.md).
+The agent owns tool selection, analysis, necessary implementation, runs and
+troubleshooting; the user accepts the actual result. Shared code grows from
+repeated needs or well-understood common operations. Target-specific
+interventions must not be presented as general API coverage. See
+[working rules](AGENTS.md).
 
 ## Compose existing capabilities
 
@@ -138,5 +149,6 @@ checks and Linux/macOS device gates retain their contracts.
 - [API33 preparation and replay](test/api33/README.md)
 - [macOS ARM64 runner](docs/MACOS_RUNNER.md)
 - [Event format](docs/EVENT_SCHEMA.md)
-- [Agent rules](CLAUDE.md)
+- [Working rules](AGENTS.md)
+- [Contributing and Git workflow](CONTRIBUTING.md)
 - [Independent CI and AgentForge integration](docs/CI.md)

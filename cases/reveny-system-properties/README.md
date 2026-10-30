@@ -2,7 +2,7 @@
 
 This local case exercises the original APK's automatic first scan through the
 composable CLI's App pack/session. Intervention follows the canonical
-[Detection Intervention Contract](../../CLAUDE.md#detection-intervention-contract).
+[Detection Intervention Contract](../../AGENTS.md#detection-intervention-contract).
 It proves five standard native property inputs, not a complete emulator bypass.
 The SDK, JNI detector, cached findings, UI and APK bytes are unchanged.
 

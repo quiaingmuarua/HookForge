@@ -1,13 +1,20 @@
 # Script Integration Guide
 
-For a new sample, a standalone script in your own project can run directly
-with the Frida CLI; see [usage](../README.md). A manifest, recipe or common
-module is optional until it helps the actual task.
+For a new sample, first check whether an existing tool or previous solution
+already achieves the requested outcome. Running that tool and recording its
+command, actual result and limits is a complete deliverable; no HookForge
+adapter or new script is required. Write a small target-specific script or
+adapter only for an observed gap.
+
+A standalone script in your own project can run directly with the Frida CLI;
+see [usage](../README.md). Public integration examples belong in `apps/`;
+private target research stays in the consuming project. A manifest, recipe or
+common module is optional until it helps the actual task.
 
 The composable Node CLI loads managed TypeScript with local manifests.
 Its `--script` entry requires `activate(ctx) -> cleanup` and rejects naked
 scripts. Do runtime work inside activation, not at import time.
-[Detection Intervention Contract](../CLAUDE.md#detection-intervention-contract)
+[Detection Intervention Contract](../AGENTS.md#detection-intervention-contract)
 applies to shared API acceptance; label target-specific solutions separately.
 
 Build with `npm run build:prod`, then `npm link` in HookForge. From another
@@ -20,6 +27,11 @@ run does not rebuild the public bundle or write outputs into the tool install.
 The paired production artifact options retain their existing verifier.
 
 ## Add a public capability
+
+Use this path for a recurring gap demonstrated by real tasks, or a small,
+well-understood common operation that is useful to share. Check existing tools
+and capabilities first; wrapping a working tool is not itself a reason to add
+an extension. The contracts below apply after choosing managed integration.
 
 Create a local manifest, without editing the CLI or legacy module registry:
 
@@ -75,6 +87,9 @@ restores the shared owner, waits for native callbacks and unloads.
 
 ## Add an App
 
+Use an App pack when the task benefits from reusable startup or in-process
+integration. A successful standalone experiment can remain in its own project.
+
 An App manifest may be as small as:
 
 ```json
@@ -119,6 +134,10 @@ The [Duck App pack](../apps/detect-env-duck/README.md) is the real example.
 
 ## Absorb an App experiment into public capability
 
+Promote the mechanism when repeated real use establishes a shared need, or when
+a well-understood common operation benefits from a small helper. Keep the
+original command and limits when an existing tool already solves the task.
+
 If an App experiment only changes `SystemProperties.get` values, remove its
 direct method replacement. Put the values in a policy JSON and use
 `--replace system-properties --profile <json>`. Java getters, getprop and the
@@ -159,7 +178,9 @@ business/network hooks are outside this migration.
   bridge and uses `performOnJava`; see [Frida 17 notes](FRIDA_17_MIGRATION.md).
 - `packages/loader`, target configs and registries serve the retained legacy
   positional path. They are separate from the composable capability catalog.
-- Target App code stays in `crackme`; installed hook behavior stays in `xposed`.
+- Target App and installed-hook sources stay in their owning external project.
+  For example, AgentForge owns its `crackme` and `xposed` modules; these are not
+  directories or build prerequisites in the standalone HookForge checkout.
 
 ## Retained module and recipe contracts
 

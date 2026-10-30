@@ -1,14 +1,18 @@
 # Independent CI and optional AgentForge integration
 
 HookForge is a public, standalone Frida tool. Its clean public baseline comes
-from the reviewed pre-publication tool snapshot. Earlier history and
-project-specific capture/detection research remain in the private archive and
-AgentForge's `frida-projects/`; they are not published through this repository.
+from the reviewed pre-publication tool snapshot. Earlier history is preserved
+in separately retained private backups; project-specific capture/detection
+research stays in AgentForge's `frida-projects/`. Neither is published through
+this repository.
 APKs, real traffic, device collections and runtime evidence are not Git sources.
 
 ## Local commands
 
-Run from the HookForge root using the Node version in `.node-version`:
+The following commands reproduce the shared host gate. Run from the HookForge
+root using the Node version in `.node-version`. For a sample task or
+documentation edit, select the relevant checks from the
+[Testing Strategy](TESTING_STRATEGY.md).
 
 ```bash
 npm ci
@@ -60,10 +64,12 @@ The parent retains its Ubuntu integration and trusted macOS ARM64 runner. These
 build the parent's current detect-env and use the fixed child tools. The macOS
 runner is not registered with HookForge and no ARM64 CI claim is made here.
 
-Pre-publication AgentForge pins continue to use the private archive through a
-read-only deploy key. Consuming this public baseline is a separate, explicit
-upgrade. Consumers keep their own RootBeer Release mirror where needed;
-integration reports distinguish tool SHA from consumer SHA.
+AgentForge consumes a fixed public HookForge commit without the former deploy
+key. The old private archive and its deploy key have been retired. Historical
+pins that refer to pre-publication commits require the separately retained
+private history to reproduce; those commits are absent from the public history.
+Consumers keep their own RootBeer Release mirror where needed; integration
+reports distinguish tool SHA from consumer SHA.
 
 Clone/init/update instructions and parent-owned build inputs belong to
 AgentForge's build guide. Hooks, sample scripts and independent checks belong here.

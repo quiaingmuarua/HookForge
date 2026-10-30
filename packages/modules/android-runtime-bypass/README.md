@@ -1,7 +1,7 @@
 # Android API hooks
 
 此目录拥有可复用的 Android API 观察与干预实现。干预边界以
-[Detection Intervention Contract](../../../CLAUDE.md#detection-intervention-contract)
+[Detection Intervention Contract](../../../AGENTS.md#detection-intervention-contract)
 为准；本文只说明模块接口、配置和已经验证的能力范围。
 
 ## 入口

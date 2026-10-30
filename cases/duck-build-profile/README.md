@@ -5,7 +5,7 @@ original `system_properties` and `virtualization` SDK scans. The detector can
 remain DANGER. It does not prove a physical-device identity, startup/helper
 coverage, graphics, raw property-area changes or direct syscall interception.
 The
-[Detection Intervention Contract](../../CLAUDE.md#detection-intervention-contract)
+[Detection Intervention Contract](../../AGENTS.md#detection-intervention-contract)
 applies; no SDK detection method or result is replaced.
 
 From the repository root in Git Bash, with native Windows Node/ADB, the
